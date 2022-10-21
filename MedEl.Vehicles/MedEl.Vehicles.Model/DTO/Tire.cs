@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
