@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedEl.Vehicles.Model", "MedEl.Vehicles.Model\MedEl.Vehicles.Model.csproj", "{FC6F4A54-0687-44BE-B29D-73D4EE25AFEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedEl.Vehicles.CLI", "MedEl.Vehicles.CLI\MedEl.Vehicles.CLI.csproj", "{8CEAB99B-58D2-43E6-AFAA-0B18AB853E14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC6F4A54-0687-44BE-B29D-73D4EE25AFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6F4A54-0687-44BE-B29D-73D4EE25AFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6F4A54-0687-44BE-B29D-73D4EE25AFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6F4A54-0687-44BE-B29D-73D4EE25AFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CEAB99B-58D2-43E6-AFAA-0B18AB853E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CEAB99B-58D2-43E6-AFAA-0B18AB853E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CEAB99B-58D2-43E6-AFAA-0B18AB853E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CEAB99B-58D2-43E6-AFAA-0B18AB853E14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE4D8EE7-2221-4ED3-B959-AF92E2CABB9F}
+	EndGlobalSection
+EndGlobal
