@@ -12,7 +12,7 @@ namespace MedEl.Vehicles.Model.DTO
     /// <summary>
     /// An abstract representation of a vehicle
     /// </summary>
-    public abstract class Vehicle : IPrettyPrintable, IVehicle
+    public abstract class Vehicle : IVehicle, IPersistable
     {
         protected Vehicle(string id, IManufacturer manufacturer)
         {
@@ -44,18 +44,6 @@ namespace MedEl.Vehicles.Model.DTO
         /// GetStatus(), GetInformation(), etc. would be better
         /// </summary>
         public void Move()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public string ToPrettyString()
-        {
-            return $"You are driving a {this.VehicleType.ToString().ToLower()} from {Manufacturer.Name}";
-        }
-
-        /// <inheritdoc/>
-        public bool Validate(out string issues)
         {
             throw new NotImplementedException();
         }
