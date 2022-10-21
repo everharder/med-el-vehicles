@@ -18,8 +18,9 @@ namespace MedEl.Vehicles.Repository.FileSystem
         /// </summary>
         /// <param name="rootDirectory">The directory the repository exists in</param>
         /// <param name="serializer">The serializer to use</param>
-        public FileSystemRepository(string rootDirectory, ISerializer serializer)
+        public FileSystemRepository(RepositoryConfiguration configuration, ISerializer serializer)
         {
+            string? rootDirectory = configuration.FileSystemRepositoryPath;
             if (string.IsNullOrWhiteSpace(rootDirectory))
             {
                 throw new ArgumentException($"'{nameof(rootDirectory)}' cannot be null or whitespace.", nameof(rootDirectory));

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedEl.Vehicles.Repository.CachedRepository
+namespace MedEl.Vehicles.Repository.PseudoRepositories
 {
     /// <summary>
     /// A collection of one or more mirrored repositories
