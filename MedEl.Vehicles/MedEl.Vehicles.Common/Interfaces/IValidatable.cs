@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedEl.Vehicles.Model.Interfaces
+namespace MedEl.Vehicles.Common.Interfaces
 {
     /// <summary>
     /// Interface for object instance validation

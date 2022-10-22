@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Common.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,28 +35,32 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
         }
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : IPersistable
+        public bool Delete<TEntity>(TEntity entity) where TEntity : IIdentification
             => executeOnRepositories(r => r.Delete(entity));
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(string id) where TEntity : IPersistable
+        public bool Delete<TEntity>(string id) where TEntity : IIdentification
             => executeOnRepositories(r => r.Delete<TEntity>(id));
 
         /// <inheritdoc/>
-        public TEntity? Get<TEntity>(string id) where TEntity : IPersistable
+        public TEntity? Get<TEntity>(string id) where TEntity : IIdentification
             => _repositories.First().Get<TEntity>(id);
 
         /// <inheritdoc/>
-        public List<TEntity> GetAll<TEntity>() where TEntity : IPersistable
+        public List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
             => _repositories.First().GetAll<TEntity>();
 
         /// <inheritdoc/>
-        public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
+        public void Save<TEntity>(TEntity entity) where TEntity : IIdentification
             => executeOnRepositories(r => r.Save(entity));
 
         /// <inheritdoc/>
         public void Truncate()
             => executeOnRepositories(r => r.Truncate());
+
+        /// <inheritdoc/>
+        public string GetHighestId<TEntity>() where TEntity : IIdentification
+            => _repositories.First().GetHighestId<TEntity>();
 
         private void executeOnRepositories(Action<IRepository> action)
         {

@@ -11,14 +11,14 @@ namespace MedEl.Vehicles.Model.DTO
     /// <summary>
     /// Concrete implementation of a motorcycle
     /// </summary>
-    public class Motorcycle : Vehicle
+    internal class Motorcycle : Vehicle, IMotorcycle
     {
         /// <summary>
         /// Creates a new instance
         /// </summary>
         /// <param name="id">The unique id of the motorcycle</param>
         /// <param name="manufacturer">The manufacturer</param>
-        public Motorcycle(string id, IManufacturer manufacturer) : base(id, manufacturer)
+        public Motorcycle(string id, IManufacturer manufacturer, IChassis chassis) : base(id, manufacturer, chassis)
         {
         }
 

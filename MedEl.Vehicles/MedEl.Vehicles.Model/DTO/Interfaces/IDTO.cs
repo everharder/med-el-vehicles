@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Model.Enums;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.DTO.Interfaces
 {
-    public interface IManufacturer : IDTO
+    public interface IDTO : IPrettyPrintable, IIdentification
     {
-        public string Name { get; }
-
-        public EVehicleType SupportedVehicleTypes { get; }
     }
 }

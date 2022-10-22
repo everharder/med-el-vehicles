@@ -1,5 +1,8 @@
 ﻿using MedEl.Vehicles.Common.Configuration;
+using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +16,10 @@ namespace MedEl.Vehicles.Common
     {
         public static IServiceCollection AddCommon(this IServiceCollection services)
         {
-            services.AddSingleton<IConfigurationDictionary, AppSettingsConfiguration>();
-
-            return services;
+            return services.AddSingleton<IConfigurationDictionary, AppSettingsConfiguration>()
+                .AddSingleton<IConfiguration, BaseConfiguration>()
+                .AddSingleton<ILogger>(provider => provider.GetRequiredService<ILogger<object>>())
+                .AddSingleton<IIdentificationProvider, IncrementalIdentifierProvider>();
         }
     }
 }

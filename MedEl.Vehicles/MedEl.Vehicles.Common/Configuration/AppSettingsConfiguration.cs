@@ -9,9 +9,9 @@ namespace MedEl.Vehicles.Common.Configuration
 {
     internal class AppSettingsConfiguration : IConfigurationDictionary
     {
-        private readonly IConfiguration appSettings;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration appSettings;
 
-        public AppSettingsConfiguration(IConfiguration appSettings)
+        public AppSettingsConfiguration(Microsoft.Extensions.Configuration.IConfiguration appSettings)
         {
             this.appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
         }

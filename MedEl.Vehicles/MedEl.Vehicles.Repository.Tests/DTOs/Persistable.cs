@@ -1,4 +1,4 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Repository.Tests.DTOs
 {
-    internal class Persistable : IPersistable
+    internal class Persistable : IIdentification
     {
         public Persistable(string id)
         {
@@ -16,6 +16,6 @@ namespace MedEl.Vehicles.Repository.Tests.DTOs
 
         public string Id { get; }
 
-        public string Payload { get; set; }
+        public string? Payload { get; set; }
     }
 }

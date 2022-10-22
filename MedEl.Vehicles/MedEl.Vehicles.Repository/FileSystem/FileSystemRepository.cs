@@ -1,4 +1,6 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Common.Repository;
+using MedEl.Vehicles.Repository.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +44,13 @@ namespace MedEl.Vehicles.Repository.FileSystem
         }
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : IPersistable
+        public bool Delete<TEntity>(TEntity entity) where TEntity : IIdentification
         {
             return Delete<TEntity>(entity.Id);
         }
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(string id) where TEntity : IPersistable
+        public bool Delete<TEntity>(string id) where TEntity : IIdentification
         {
             string fileName = getPath<TEntity>(id);
             lock (fileName)
@@ -63,7 +65,7 @@ namespace MedEl.Vehicles.Repository.FileSystem
         }
 
         /// <inheritdoc/>
-        public TEntity? Get<TEntity>(string id) where TEntity : IPersistable
+        public TEntity? Get<TEntity>(string id) where TEntity : IIdentification
         {
             string fileName = getPath<TEntity>(id);
             if (!File.Exists(fileName))
@@ -74,7 +76,7 @@ namespace MedEl.Vehicles.Repository.FileSystem
         }
 
         /// <inheritdoc/>
-        public List<TEntity> GetAll<TEntity>() where TEntity : IPersistable
+        public List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
         {
             return Directory.EnumerateFiles(getPath<TEntity>())
                 .Select(x => read<TEntity>(x))
@@ -82,7 +84,7 @@ namespace MedEl.Vehicles.Repository.FileSystem
         }
 
         /// <inheritdoc/>
-        public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
+        public void Save<TEntity>(TEntity entity) where TEntity : IIdentification
             => write(entity);
 
         /// <inheritdoc/>
@@ -91,7 +93,7 @@ namespace MedEl.Vehicles.Repository.FileSystem
             Directory.Delete(rootDirectory, recursive: true);
         }
 
-        private void write<TEntity>(TEntity entity) where TEntity : IPersistable
+        private void write<TEntity>(TEntity entity) where TEntity : IIdentification
         {
             string content = serializer.Serialize(entity);
             string fileName = getPath<TEntity>(entity.Id);
@@ -130,6 +132,18 @@ namespace MedEl.Vehicles.Repository.FileSystem
 
             string typePath = getPath<TEntity>();
             return Path.Combine(typePath, $"{id}{serializer.FileExtension}");
+        }
+
+        /// <inheritdoc/>
+        public string GetHighestId<TEntity>() where TEntity : IIdentification
+        {
+            string directory = getPath<TEntity>();
+            return Directory.EnumerateFiles(directory)
+                .Select(x => Path.GetFileNameWithoutExtension(x))
+                .Select(x => long.TryParse(x, out long id) ? id : (long?)null)
+                .Where(x => x.HasValue)
+                .OrderByDescending(x => x)
+                .FirstOrDefault()?.ToString() ?? "-1";
         }
     }
 }

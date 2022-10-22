@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedEl.Vehicles.Model.Interfaces
+namespace MedEl.Vehicles.Common.Identification
 {
     /// <summary>
     /// Interface for objects that are persistable 
     /// </summary>
-    public interface IPersistable
+    public interface IIdentification
     {
         /// <summary>
         /// The id (unique primary key)

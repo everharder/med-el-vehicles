@@ -1,5 +1,5 @@
-﻿using MedEl.Vehicles.Model.DTO.Interfaces;
-using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Model.DTO.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.DTO
 {
-    public class Chassis : IChassis, IPersistable
+    internal class Chassis : DTOBase, IChassis
     {
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public Chassis(string id, IEnumerable<ITire> tires)
+        public Chassis(string id, IEnumerable<ITire> tires) : base(id)
         {
             if (tires is null)
             {
@@ -21,14 +21,11 @@ namespace MedEl.Vehicles.Model.DTO
             }
 
             Tires = tires.ToList();
-            Id = id;
         }
 
         /// <summary>
         /// The tires attached to the chassis
         /// </summary>
         public List<ITire> Tires { get; }
-
-        public string Id { get; }
     }
 }

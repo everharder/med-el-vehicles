@@ -11,14 +11,14 @@ namespace MedEl.Vehicles.Model.DTO
     /// <summary>
     /// Concrete implementation of a car
     /// </summary>
-    public class Car : Vehicle
+    internal class Car : Vehicle, ICar
     {
         /// <summary>
         /// Creates a new instance
         /// </summary>
         /// <param name="id">The unique id of the Car</param>
         /// <param name="manufacturer">The manufacturer</param>
-        public Car(string id, IManufacturer manufacturer) : base(id, manufacturer)
+        public Car(string id, IManufacturer manufacturer, IChassis chassis) : base(id, manufacturer, chassis)
         {
         }
 

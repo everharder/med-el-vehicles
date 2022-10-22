@@ -1,4 +1,4 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Repository.InMemory
 {
-    internal class TypeSpecificCache<TCache> : ITypeSpecificCache where TCache : IPersistable
+    internal class TypeSpecificCache<TCache> : ITypeSpecificCache where TCache : IIdentification
     {
         private readonly ConcurrentDictionary<string, TCache> _cache = new ConcurrentDictionary<string, TCache>(StringComparer.OrdinalIgnoreCase);
         
@@ -57,6 +57,18 @@ namespace MedEl.Vehicles.Repository.InMemory
         public void Save(TCache entity)
         {
             _cache.AddOrUpdate(entity.Id, entity, (_, _) => entity);
+        }
+
+        /// <summary>
+        /// Gets the highest numerical id from the cache
+        /// </summary>
+        internal string GetHighestId<TEntity>() where TEntity : IIdentification
+        {
+            return _cache.Keys
+                .Select(x => long.TryParse(x, out long id) ? id : (long?)null)
+                .Where(x => x.HasValue)
+                .OrderByDescending(x => x)
+                .FirstOrDefault()?.ToString() ?? "-1";
         }
     }
 }

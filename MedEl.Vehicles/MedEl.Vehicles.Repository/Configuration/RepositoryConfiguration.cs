@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedEl.Vehicles.Repository
+namespace MedEl.Vehicles.Repository.Configuration
 {
     public class RepositoryConfiguration : BaseConfiguration
     {
@@ -16,8 +16,8 @@ namespace MedEl.Vehicles.Repository
 
         protected override string settingPrefix => "Repository";
 
-        public bool UseCaching => getConfig(defaultValue: true);
+        public bool UseCaching => GetConfiguration(defaultValue: true);
 
-        public string? FileSystemRepositoryPath => getConfig(defaultValue: string.Empty);
+        public string? FileSystemRepositoryPath => GetConfiguration(defaultValue: string.Empty);
     }
 }

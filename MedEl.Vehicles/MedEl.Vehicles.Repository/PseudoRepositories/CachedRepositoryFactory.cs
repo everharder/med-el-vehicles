@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Repository.InMemory;
+﻿using MedEl.Vehicles.Common.Repository;
+using MedEl.Vehicles.Repository.InMemory;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

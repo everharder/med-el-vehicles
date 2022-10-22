@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Model.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Common.Repository;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace MedEl.Vehicles.Repository.InMemory
         private readonly ConcurrentDictionary<Type, ITypeSpecificCache> _caches = new ConcurrentDictionary<Type, ITypeSpecificCache>();
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : IPersistable
+        public bool Delete<TEntity>(TEntity entity) where TEntity : IIdentification
         {
             if(entity == null)
             {
@@ -28,19 +29,19 @@ namespace MedEl.Vehicles.Repository.InMemory
         }
 
         /// <inheritdoc/>
-        public bool Delete<TEntity>(string id) where TEntity : IPersistable
+        public bool Delete<TEntity>(string id) where TEntity : IIdentification
             => getOrCreateCache<TEntity>().Delete(id);
 
         /// <inheritdoc/>
-        public TEntity? Get<TEntity>(string id) where TEntity : IPersistable
+        public TEntity? Get<TEntity>(string id) where TEntity : IIdentification
             => getOrCreateCache<TEntity>().Get(id);
 
         /// <inheritdoc/>
-        public List<TEntity> GetAll<TEntity>() where TEntity : IPersistable
+        public List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
             => getOrCreateCache<TEntity>().GetAll();
 
         /// <inheritdoc/>
-        public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
+        public void Save<TEntity>(TEntity entity) where TEntity : IIdentification
             => getOrCreateCache<TEntity>().Save(entity);
 
         /// <inheritdoc/>
@@ -49,7 +50,10 @@ namespace MedEl.Vehicles.Repository.InMemory
             _caches.Clear();
         }
 
-        private TypeSpecificCache<TEntity> getOrCreateCache<TEntity>() where TEntity : IPersistable
+        public string GetHighestId<TEntity>() where TEntity : IIdentification
+            => getOrCreateCache<TEntity>().GetHighestId<TEntity>();
+
+        private TypeSpecificCache<TEntity> getOrCreateCache<TEntity>() where TEntity : IIdentification
         {
             ITypeSpecificCache cache = _caches.GetOrAdd(typeof(TEntity), new TypeSpecificCache<TEntity>());
 

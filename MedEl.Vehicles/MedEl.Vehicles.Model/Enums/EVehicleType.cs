@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.Enums
 {
+    [Flags]
     public enum EVehicleType : byte
     {
         Car = 0,

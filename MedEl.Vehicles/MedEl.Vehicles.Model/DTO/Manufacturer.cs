@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.DTO
 {
-    public class Manufacturer : IManufacturer
+    internal class Manufacturer : DTOBase, IManufacturer
     {
-        public Manufacturer(string name, List<EVehicleType> vehicleTypes)
+        public Manufacturer(string name, EVehicleType supportedVehicleTypes) : base(name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -18,11 +18,11 @@ namespace MedEl.Vehicles.Model.DTO
             }
             Name = name;
 
-            VehicleTypes = vehicleTypes ?? throw new ArgumentNullException(nameof(vehicleTypes));
+            SupportedVehicleTypes = supportedVehicleTypes;
         }
 
         public string Name { get; }
 
-        public List<EVehicleType> VehicleTypes { get; }
+        public EVehicleType SupportedVehicleTypes { get; }
     }
 }

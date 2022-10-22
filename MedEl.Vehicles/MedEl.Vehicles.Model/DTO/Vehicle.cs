@@ -1,6 +1,6 @@
-﻿using MedEl.Vehicles.Model.DTO.Interfaces;
+﻿using MedEl.Vehicles.Common.Identification;
+using MedEl.Vehicles.Model.DTO.Interfaces;
 using MedEl.Vehicles.Model.Enums;
-using MedEl.Vehicles.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +12,16 @@ namespace MedEl.Vehicles.Model.DTO
     /// <summary>
     /// An abstract representation of a vehicle
     /// </summary>
-    public abstract class Vehicle : IVehicle, IPersistable
+    internal abstract class Vehicle : DTOBase, IVehicle
     {
-        protected Vehicle(string id, IManufacturer manufacturer)
+        protected Vehicle(string id, IManufacturer manufacturer, IChassis chassis) : base(id)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
                 throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
             }
-            Id = id;
-
             Manufacturer = manufacturer ?? throw new ArgumentNullException(nameof(manufacturer));
+            Chassis = chassis ?? throw new ArgumentNullException(nameof(chassis));
         }
 
         /// <summary>
@@ -35,8 +34,10 @@ namespace MedEl.Vehicles.Model.DTO
         /// </summary>
         public IManufacturer Manufacturer { get; }
 
-        /// <inheritdoc/>
-        public string Id { get; }
+        /// <summary>
+        /// The chassis of the vehicle, containing the tires
+        /// </summary>
+        public IChassis Chassis { get; }
 
         /// <summary>
         /// As required by the assignment this method prints the current state of the instance
@@ -45,7 +46,19 @@ namespace MedEl.Vehicles.Model.DTO
         /// </summary>
         public void Move()
         {
-            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override string ToPrettyString()
+        {
+            return new StringBuilder()
+                .Append($"You are driving a {VehicleType.ToString().ToLower()} from {Manufacturer.Name}")
+                .Append(Environment.NewLine)
+                .Append($"Chassis:")
+                .Append(Environment.NewLine)
+                .Append(Chassis.ToPrettyString())
+                .Append(Environment.NewLine)
+                .ToString();
         }
     }
 }

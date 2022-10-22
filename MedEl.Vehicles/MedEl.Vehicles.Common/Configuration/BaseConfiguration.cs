@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 namespace MedEl.Vehicles.Common.Configuration
 {
@@ -12,7 +6,7 @@ namespace MedEl.Vehicles.Common.Configuration
     /// Common base class for all configurations
     /// Allows to access optional appsettings.json config values and use fallback values if desired
     /// </summary>
-    public abstract class BaseConfiguration
+    public class BaseConfiguration : IConfiguration
     {
         private readonly IConfigurationDictionary configuration;
 
@@ -28,7 +22,7 @@ namespace MedEl.Vehicles.Common.Configuration
 
         protected virtual string settingPrefix => string.Empty;
 
-        protected TValue? getConfig<TValue>(TValue? defaultValue = default, [CallerMemberName] string? settingName = null)
+        public TValue? GetConfiguration<TValue>(TValue? defaultValue = default, [CallerMemberName] string? settingName = null)
         {
             if (string.IsNullOrWhiteSpace(settingName))
             {

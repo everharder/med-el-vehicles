@@ -1,4 +1,5 @@
 ﻿using MedEl.Vehicles.Common;
+using MedEl.Vehicles.Repository.Configuration;
 using MedEl.Vehicles.Repository.FileSystem;
 using MedEl.Vehicles.Repository.InMemory;
 using MedEl.Vehicles.Repository.PseudoRepositories;
