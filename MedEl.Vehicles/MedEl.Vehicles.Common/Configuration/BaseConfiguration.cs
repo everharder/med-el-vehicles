@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedEl.Vehicles.Common
+namespace MedEl.Vehicles.Common.Configuration
 {
     /// <summary>
     /// Common base class for all configurations
@@ -14,35 +14,35 @@ namespace MedEl.Vehicles.Common
     /// </summary>
     public abstract class BaseConfiguration
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfigurationDictionary configuration;
 
         /// <summary>
         /// Creates a new instance of the base configuration
         /// </summary>
         /// <param name="configuration"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public BaseConfiguration(IConfiguration configuration)
+        public BaseConfiguration(IConfigurationDictionary configuration)
         {
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         protected virtual string settingPrefix => string.Empty;
 
-        protected TValue? getConfig<TValue>(TValue? defaultValue = default(TValue?), [CallerMemberName] string? settingName = null)
+        protected TValue? getConfig<TValue>(TValue? defaultValue = default, [CallerMemberName] string? settingName = null)
         {
-            if(string.IsNullOrWhiteSpace(settingName))
+            if (string.IsNullOrWhiteSpace(settingName))
             {
                 throw new ArgumentNullException(nameof(settingName));
             }
 
             string prefix = settingPrefix;
-            if(!string.IsNullOrWhiteSpace(prefix) && !prefix.EndsWith(":"))
+            if (!string.IsNullOrWhiteSpace(prefix) && !prefix.EndsWith(":"))
             {
                 prefix += ":";
             }
 
             string settingValue = configuration[$"{prefix}{settingName}"];
-            if(string.IsNullOrWhiteSpace(settingValue))
+            if (string.IsNullOrWhiteSpace(settingValue))
             {
                 return defaultValue;
             }

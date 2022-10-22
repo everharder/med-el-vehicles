@@ -33,5 +33,10 @@ namespace MedEl.Vehicles.Repository
         /// Deletes the given <paramref name="id"/>. If it existed before True is returned, otherwise False.
         /// </summary>
         public bool Delete<TEntity>(string id) where TEntity : IPersistable;
+
+        /// <summary>
+        /// Deletes the whole repository
+        /// </summary>
+        internal void Truncate();
     }
 }

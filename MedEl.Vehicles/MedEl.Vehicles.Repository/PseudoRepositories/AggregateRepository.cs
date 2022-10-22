@@ -53,6 +53,10 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
         public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
             => executeOnRepositories(r => r.Save(entity));
 
+        /// <inheritdoc/>
+        public void Truncate()
+            => executeOnRepositories(r => r.Truncate());
+
         private void executeOnRepositories(Action<IRepository> action)
         {
             if (action is null)

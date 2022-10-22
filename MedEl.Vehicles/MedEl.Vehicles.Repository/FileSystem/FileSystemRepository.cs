@@ -85,6 +85,12 @@ namespace MedEl.Vehicles.Repository.FileSystem
         public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
             => write(entity);
 
+        /// <inheritdoc/>
+        public void Truncate()
+        {
+            Directory.Delete(rootDirectory, recursive: true);
+        }
+
         private void write<TEntity>(TEntity entity) where TEntity : IPersistable
         {
             string content = serializer.Serialize(entity);
@@ -106,9 +112,20 @@ namespace MedEl.Vehicles.Repository.FileSystem
 
         private string getPath<TEntity>(string? id = null)
         {
+            // check if root exists (might have been deleted beforehand)
+            if (!Directory.Exists(rootDirectory))
+            {
+                Directory.CreateDirectory(rootDirectory);
+            }
+
             if (string.IsNullOrWhiteSpace(id))
             {
-                return Path.Combine(rootDirectory, typeof(TEntity).Name);
+                string directoryForType = Path.Combine(rootDirectory, typeof(TEntity).Name);
+                if(!Directory.Exists(directoryForType))
+                {
+                    Directory.CreateDirectory(directoryForType);
+                }
+                return directoryForType;
             }
 
             string typePath = getPath<TEntity>();

@@ -43,6 +43,12 @@ namespace MedEl.Vehicles.Repository.InMemory
         public void Save<TEntity>(TEntity entity) where TEntity : IPersistable
             => getOrCreateCache<TEntity>().Save(entity);
 
+        /// <inheritdoc/>
+        public void Truncate()
+        {
+            _caches.Clear();
+        }
+
         private TypeSpecificCache<TEntity> getOrCreateCache<TEntity>() where TEntity : IPersistable
         {
             ITypeSpecificCache cache = _caches.GetOrAdd(typeof(TEntity), new TypeSpecificCache<TEntity>());

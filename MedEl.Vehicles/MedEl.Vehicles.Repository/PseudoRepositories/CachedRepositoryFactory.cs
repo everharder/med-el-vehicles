@@ -1,4 +1,5 @@
 ﻿using MedEl.Vehicles.Repository.InMemory;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,14 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
 {
     internal class CachedRepositoryFactory
     {
-        public CachedRepository CreateInstance(IRepository repository)
+        private readonly IServiceProvider services;
+
+        public CachedRepositoryFactory(IServiceProvider services)
+        {
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
+        }
+
+        public IRepository CreateInstance(IRepository repository)
         {
             if (repository is null)
             {
@@ -19,14 +27,12 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
             List<IRepository> repositories;
             if (repository is InMemoryRepository)
             {
-                repositories = new List<IRepository>() { repository };
-            }
-            else
-            {
-                InMemoryRepository cache = new InMemoryRepository();
-                repositories = new List<IRepository>() { cache, repository };
+                // ne need for cache if the main repository is already in memory 
+                return repository;
             }
 
+            InMemoryRepository cache = services.GetRequiredService<InMemoryRepository>();
+            repositories = new List<IRepository>() { cache, repository };
             return new CachedRepository(repositories);
         }
     }

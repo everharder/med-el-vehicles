@@ -1,4 +1,4 @@
-﻿using MedEl.Vehicles.Common;
+﻿using MedEl.Vehicles.Common.Configuration;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace MedEl.Vehicles.Repository
 {
     public class RepositoryConfiguration : BaseConfiguration
     {
-        public RepositoryConfiguration(IConfiguration configuration) : base(configuration)
+        public RepositoryConfiguration(IConfigurationDictionary configuration) : base(configuration)
         {
         }
 
