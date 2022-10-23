@@ -46,6 +46,7 @@ namespace MedEl.Vehicles.Model.DTO
         /// </summary>
         public void Move()
         {
+            Console.WriteLine(ToPrettyString());
         }
 
         /// <inheritdoc/>
