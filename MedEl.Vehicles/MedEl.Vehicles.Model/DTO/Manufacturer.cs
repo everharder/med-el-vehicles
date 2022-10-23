@@ -24,5 +24,25 @@ namespace MedEl.Vehicles.Model.DTO
         public string Name { get; }
 
         public EVehicleType SupportedVehicleTypes { get; }
+
+        public string ToTableHeader()
+        {
+            return $"NAME\tVEHICLE TYPES";
+        }
+
+        public string ToTableRow()
+        {
+            return $"{Name}\t{SupportedVehicleTypes}";
+        }
+
+        public override string ToString()
+        {
+            return ToTableRow();
+        }
+
+        public override string ToPrettyString()
+        {
+            return ToTableRow();
+        }
     }
 }

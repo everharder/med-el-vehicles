@@ -20,5 +20,14 @@ namespace MedEl.Vehicles.Model.DTO
         /// The maximum temperature where this tire is operable
         /// </summary>
         public float MaximumTemperature { get; }
+
+        /// <inheritdoc/>
+        public override string ToPrettyString()
+        {
+            return new StringBuilder()
+                .Append(base.ToPrettyString())
+                .Append($", Max. Temp.: {MaximumTemperature}°C")
+                .ToString();
+        }
     }
 }

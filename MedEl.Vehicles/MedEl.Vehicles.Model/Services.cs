@@ -21,6 +21,7 @@ namespace MedEl.Vehicles.Model
                 .AddTransient<WinterTireConfiguration>()
                 .AddSingleton<IManufacturerFactory, ManufacturerFactory>()
                 .AddSingleton<IVehicleFactory, VehicleFactory>()
+                .AddSingleton<IAxleFactory, AxleFactory>()
                 .AddSingleton<ITireFactory, TireFactory>()
                 .AddSingleton<IChassisFactory, ChassisFactory>();
         }

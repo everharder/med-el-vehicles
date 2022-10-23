@@ -9,7 +9,7 @@ namespace MedEl.Vehicles.Model.Enums
     [Flags]
     public enum EVehicleType : byte
     {
-        Car = 0,
-        Motorcycle = 1,
+        Car = 1,
+        Motorcycle = 2,
     }
 }

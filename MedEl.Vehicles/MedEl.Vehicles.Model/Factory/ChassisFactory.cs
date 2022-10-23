@@ -13,35 +13,34 @@ namespace MedEl.Vehicles.Model.Factory
 {
     internal class ChassisFactory : FactoryBase, IChassisFactory
     {
-        private readonly ITireFactory tireFactory;
+        private readonly IAxleFactory axleFactory;
 
-        public ChassisFactory(ILogger logger, IIdentificationProvider identificationProvider, ITireFactory tireFactory) : base(logger, identificationProvider)
+        public ChassisFactory(ILogger logger, IIdentificationProvider identificationProvider, IAxleFactory axleFactory) : base(logger, identificationProvider)
         {
-            this.tireFactory = tireFactory ?? throw new ArgumentNullException(nameof(tireFactory));
+            this.axleFactory = axleFactory ?? throw new ArgumentNullException(nameof(axleFactory));
         }
 
         public IChassis CreateCarChassis()
         {
-            string id = getId<Chassis>();
-
-            // create four summer tires (default)
-            List<ITire> tires = Enumerable.Range(0, 4)
-                .Select(x => tireFactory.CreateSummerTire())
-                .ToList();
-
-            return new Chassis(id, tires);
+            return createChassis(new List<IAxle>()
+            {
+                axleFactory.CreateCarAxle(),
+                axleFactory.CreateCarAxle(),
+            });
         }
 
         public IChassis CreateMotorcycleChassis()
         {
+            return createChassis(new List<IAxle>()
+            {
+                axleFactory.CreateMotorcycleAxle()
+            });
+        }
+
+        private IChassis createChassis(IEnumerable<IAxle> axles)
+        {
             string id = getId<Chassis>();
-
-            // create two summer tires (default)
-            List<ITire> tires = Enumerable.Range(0, 2)
-                .Select(x => tireFactory.CreateSummerTire())
-                .ToList();
-
-            return new Chassis(id, tires);
+            return new Chassis(id, axles);
         }
     }
 }

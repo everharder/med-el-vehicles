@@ -2,6 +2,6 @@
 {
     public interface IChassis : IDTO
     {
-        List<ITire> Tires { get; }
+        List<IAxle> Axles { get; }
     }
 }

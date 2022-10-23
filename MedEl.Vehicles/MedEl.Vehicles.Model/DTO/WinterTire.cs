@@ -22,5 +22,15 @@ namespace MedEl.Vehicles.Model.DTO
         public float MinimumTemperature { get; }
 
         public float Thickness { get; }
+
+        /// <inheritdoc/>
+        public override string ToPrettyString()
+        {
+            return new StringBuilder()
+                .Append(base.ToPrettyString())
+                .Append($", Min. Temp.: {MinimumTemperature}°C")
+                .Append($", Thickness: {Thickness * 1000}mm")
+                .ToString();
+        }
     }
 }

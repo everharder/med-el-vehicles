@@ -23,5 +23,11 @@ namespace MedEl.Vehicles.Model.DTO
         /// The current pressure of the tire
         /// </summary>
         public float Pressure { get; }
+
+        /// <inheritdoc/>
+        public override string ToPrettyString()
+        {
+            return $"Pressure: {Pressure}Pa";
+        }
     }
 }

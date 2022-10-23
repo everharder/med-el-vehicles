@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MedEl.Vehicles.Model.DTO
 {
@@ -53,13 +54,24 @@ namespace MedEl.Vehicles.Model.DTO
         public override string ToPrettyString()
         {
             return new StringBuilder()
-                .Append($"You are driving a {VehicleType.ToString().ToLower()} from {Manufacturer.Name}")
-                .Append(Environment.NewLine)
-                .Append($"Chassis:")
-                .Append(Environment.NewLine)
-                .Append(Chassis.ToPrettyString())
-                .Append(Environment.NewLine)
+                .AppendLine($"You are driving a {VehicleType.ToString().ToLower()} from {Manufacturer.Name}")
+                .AppendLine(Chassis.ToPrettyString())
                 .ToString();
+        }
+
+        public string ToTableHeader()
+        {
+            return $"ID\tVEHICLETYPE\tMANUFACTURER";
+        }
+
+        public string ToTableRow()
+        {
+            return $"{Id}\t{VehicleType}\t{Manufacturer.Name}";
+        }
+
+        public override string ToString()
+        {
+            return ToTableRow();
         }
     }
 }

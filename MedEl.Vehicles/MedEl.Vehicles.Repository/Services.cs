@@ -1,5 +1,8 @@
 ﻿using MedEl.Vehicles.Common;
+using MedEl.Vehicles.Common.DAC;
+using MedEl.Vehicles.Model.DTO.Interfaces;
 using MedEl.Vehicles.Repository.Configuration;
+using MedEl.Vehicles.Repository.DAC;
 using MedEl.Vehicles.Repository.FileSystem;
 using MedEl.Vehicles.Repository.InMemory;
 using MedEl.Vehicles.Repository.PseudoRepositories;
@@ -24,7 +27,11 @@ namespace MedEl.Vehicles.Repository
                 .AddSingleton<RepositoryConfiguration>()
                 .AddSingleton<RepositoryFactory>()
                 .AddTransient(typeof(TypeSpecificCache<>))
-                .AddSingleton((provider) => provider.GetRequiredService<RepositoryFactory>().CreateInstance());
+                .AddSingleton((provider) => provider.GetRequiredService<RepositoryFactory>().CreateInstance())
+                .AddSingleton<ITypedDAC<ICar>, DACBase<ICar>>()
+                .AddSingleton<ITypedDAC<IMotorcycle>, DACBase<IMotorcycle>>()
+                .AddSingleton<ITypedDAC<IManufacturer>, DACBase<IManufacturer>>()
+                .AddSingleton<IDACFactory, DACFactory>();
         }
     }
 }

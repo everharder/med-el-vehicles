@@ -13,19 +13,31 @@ namespace MedEl.Vehicles.Model.DTO
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public Chassis(string id, IEnumerable<ITire> tires) : base(id)
+        public Chassis(string id, IEnumerable<IAxle> axles) : base(id)
         {
-            if (tires is null)
+            if (axles is null)
             {
-                throw new ArgumentNullException(nameof(tires));
+                throw new ArgumentNullException(nameof(axles));
             }
 
-            Tires = tires.ToList();
+            Axles = axles.ToList();
         }
 
         /// <summary>
         /// The tires attached to the chassis
         /// </summary>
-        public List<ITire> Tires { get; }
+        public List<IAxle> Axles { get; }
+
+        /// <inheritdoc/>
+        public override string ToPrettyString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < Axles.Count; i++)
+            {
+                sb.AppendLine($"Axle {i + 1}")
+                    .AppendLine(Axles[i].ToPrettyString());
+            }
+            return sb.ToString();
+        }
     }
 }

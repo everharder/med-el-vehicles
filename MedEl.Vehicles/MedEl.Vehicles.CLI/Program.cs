@@ -1,6 +1,10 @@
 ﻿using CommandLine;
+using MedEl.Vehicles.CLI;
+using MedEl.Vehicles.CLI.Commands;
 using MedEl.Vehicles.CLI.Input;
 using MedEl.Vehicles.Common;
+using MedEl.Vehicles.Common.DAC;
+using MedEl.Vehicles.Common.Interfaces;
 using MedEl.Vehicles.Common.Repository;
 using MedEl.Vehicles.Model;
 using MedEl.Vehicles.Model.DTO.Interfaces;
@@ -16,65 +20,43 @@ using Microsoft.Extensions.Logging;
 IServiceProvider services = setupServices();
 IRepository repository = setupDataModel(services);
 
+Parser parser = setupParser();
+CommandFactory commandFactory = services.GetRequiredService<CommandFactory>();
+
 bool running = true;
-IDTO? selected = null;
-
-Parser parser = new Parser((config) =>
-{
-    config.CaseSensitive = false;
-    config.AutoHelp = true;
-    config.CaseInsensitiveEnumValues = true;
-    config.HelpWriter = Console.Error;
-});
-
 while (running)
 {
-    Console.Write("Command: ");
-    string? i = Console.ReadLine();
-    if(string.IsNullOrWhiteSpace(i))
+    try
     {
-        continue;
-    }
-    parser.ParseArguments<Commands>(i.Split(' '))
-        .WithParsed<Commands>(input =>
+        Console.Write("Input: ");
+        string? i = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(i))
         {
-            //if (!input.TryParseCommand(out ECommand c))
-            //{
-            //    return;
-            //}
-
-            switch(input.Command)
+            continue;
+        }
+        parser.ParseArguments<CliInput>(i.Split(' '))
+            .WithParsed(input =>
             {
-                case ECommand.Exit:
+                if(input.Command == ECommand.Exit)
+                {
                     Console.WriteLine("Goodbye!");
                     running = false;
-                    break;
-                case ECommand.List:
-                case ECommand.Select:
-                case ECommand.Create:
-                case ECommand.Print:
-                case ECommand.Delete:
-                default:
-                    throw new NotImplementedException(input.Command.ToString());
-            }
-        });
+                    return;
+                }
+
+                // create commands
+                List<ICommand> commands = commandFactory.CreateCommands(input);
+
+                // execute commands
+                string output = string.Join(Environment.NewLine, commands.Select(x => x.Execute(input)));
+                Console.WriteLine(output);
+            });
+    }
+    catch (Exception e)
+    {
+        Console.Error.WriteLine(e);
+    }
 }
-
-//ILogger logger = services.GetRequiredService<ILogger>();
-//IVehicleFactory vehicleFactory = services.GetRequiredService<IVehicleFactory>();
-
-//IManufacturer manufacturerToyota = repository.Get<IManufacturer>("Toyota")!;
-//IVehicle toyota = vehicleFactory.CreateCar(manufacturerToyota);
-////toyota.Move();
-//logger.LogInformation(toyota.ToPrettyString());
-
-//IManufacturer manufacturerHonda = repository.Get<IManufacturer>("Honda")!;
-//IVehicle honda = vehicleFactory.CreateMotorcycle(manufacturerHonda);
-//logger.LogInformation(honda.ToPrettyString());
-////honda.Move();
-
-//Console.Read();
-
 
 
 
@@ -85,13 +67,13 @@ IServiceProvider setupServices()
             .AddConsole())
         .ConfigureHostConfiguration((configBuilder) => configBuilder.AddJsonFile("appsettings.json"))
         .ConfigureServices((_, services) => services
-            .AddCommon()
-            .AddModel()
-            .AddRepository())
+            .AddCli())
         .Build();
 
     return host.Services;
 }
+
+
 
 IRepository setupDataModel(IServiceProvider services)
 {
@@ -111,4 +93,15 @@ IRepository setupDataModel(IServiceProvider services)
     repository.Save(ktm);
 
     return repository;
+}
+
+static Parser setupParser()
+{
+    return new Parser((config) =>
+    {
+        config.CaseSensitive = false;
+        config.AutoHelp = true;
+        config.CaseInsensitiveEnumValues = true;
+        config.HelpWriter = Console.Error;
+    });
 }
