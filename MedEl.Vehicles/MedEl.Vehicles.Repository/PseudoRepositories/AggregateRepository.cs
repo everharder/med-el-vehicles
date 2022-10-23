@@ -43,12 +43,13 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
             => executeOnRepositories(r => r.Delete<TEntity>(id));
 
         /// <inheritdoc/>
-        public TEntity? Get<TEntity>(string id) where TEntity : IIdentification
-            => _repositories.First().Get<TEntity>(id);
+        public virtual TEntity? Get<TEntity>(string id) where TEntity : IIdentification
+            => _repositories.Select(x => x.Get<TEntity>(id)).FirstOrDefault(x => x != null);
 
         /// <inheritdoc/>
-        public List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
-            => _repositories.First().GetAll<TEntity>();
+        public virtual List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
+            => _repositories.Select(x => x.GetAll<TEntity>()).FirstOrDefault(x => x.Count > 0)
+                ?? new List<TEntity>();
 
         /// <inheritdoc/>
         public void Save<TEntity>(TEntity entity) where TEntity : IIdentification
