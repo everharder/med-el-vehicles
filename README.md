@@ -1,3 +1,5 @@
+![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 # MED-EL Application Assignment 
 
 The task is to create an assembly to encapsulate different vehicles from a client application. For that
