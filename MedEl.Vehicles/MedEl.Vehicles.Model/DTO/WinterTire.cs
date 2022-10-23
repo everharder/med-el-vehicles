@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedEl.Vehicles.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace MedEl.Vehicles.Model.DTO
         public float MinimumTemperature { get; }
 
         public float Thickness { get; }
+
+        public override ETireType Type => ETireType.WinterTire;
 
         /// <inheritdoc/>
         public override string ToPrettyString()

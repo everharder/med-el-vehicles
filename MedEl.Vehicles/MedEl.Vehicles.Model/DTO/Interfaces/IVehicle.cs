@@ -7,6 +7,7 @@ namespace MedEl.Vehicles.Model.DTO.Interfaces
     {
         public IManufacturer Manufacturer { get; }
         public EVehicleType VehicleType { get; }
+        IChassis Chassis { get; }
 
         public void Move();
     }

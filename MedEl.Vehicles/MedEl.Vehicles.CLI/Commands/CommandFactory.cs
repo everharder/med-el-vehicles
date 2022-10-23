@@ -37,6 +37,11 @@ namespace MedEl.Vehicles.CLI.Commands
                         break;
                     case ECommand.Create:
                         commands.Add(services.GetRequiredService<CreateCommand>());
+                        commands.Add(services.GetRequiredService<PrintCommand>());
+                        break;
+                    case ECommand.ChangeTires:
+                        commands.Add(services.GetRequiredService<ChangeTiresCommand>());
+                        commands.Add(services.GetRequiredService<PrintCommand>());
                         break;
                     case ECommand.Delete:
                         commands.Add(services.GetRequiredService<DeleteCommand>());

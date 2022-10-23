@@ -13,6 +13,7 @@ namespace MedEl.Vehicles.CLI.Input
         Delete,
         Select,
         Print,
+        ChangeTires,
         Exit,
     }
 }

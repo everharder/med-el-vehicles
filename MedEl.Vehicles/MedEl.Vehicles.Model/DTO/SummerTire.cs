@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedEl.Vehicles.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace MedEl.Vehicles.Model.DTO
         /// The maximum temperature where this tire is operable
         /// </summary>
         public float MaximumTemperature { get; }
+
+        public override ETireType Type => ETireType.SummerTire;
 
         /// <inheritdoc/>
         public override string ToPrettyString()

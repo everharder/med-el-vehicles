@@ -22,15 +22,11 @@ namespace MedEl.Vehicles.CLI.Commands
         public override string Execute(CliInput input)
         {
             StringBuilder sb = new StringBuilder();
-            if(context.SelectedElement == null)
-            {
-                sb.AppendLine("Nothing to print...");
-            }
-            else if(context.SelectedElement is IPrettyPrintable prettyPrintable)
+            if(context.SelectedElement is IPrettyPrintable prettyPrintable)
             {
                 sb.AppendLine(prettyPrintable.ToPrettyString());
             }
-            else
+            else if (context.SelectedElement != null)
             {
                 sb.AppendLine(context.SelectedElement.ToString());
             }

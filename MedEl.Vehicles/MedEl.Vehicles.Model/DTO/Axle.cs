@@ -12,5 +12,17 @@ namespace MedEl.Vehicles.Model.DTO
         protected Axle(string id) : base(id)
         {
         }
+
+        public abstract IEnumerable<ITire> Tires { get; }
+        public abstract int TireCount { get; }
+
+        public virtual void SetTires(IEnumerable<ITire> tires)
+        {
+            ITire[] t = tires.ToArray();
+            if (t.Length != TireCount)
+            {
+                throw new ArgumentException($"Expected {TireCount} tire(s), got {t.Length}");
+            }
+        }
     }
 }

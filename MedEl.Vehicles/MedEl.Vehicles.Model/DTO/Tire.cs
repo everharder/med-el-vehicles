@@ -1,5 +1,6 @@
 ﻿using MedEl.Vehicles.Common.Identification;
 using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,12 @@ namespace MedEl.Vehicles.Model.DTO
         /// The current pressure of the tire
         /// </summary>
         public float Pressure { get; }
+        public abstract ETireType Type { get; }
 
         /// <inheritdoc/>
         public override string ToPrettyString()
         {
-            return $"Pressure: {Pressure}Pa";
+            return $"{Type}, Pressure: {Pressure}Pa";
         }
     }
 }

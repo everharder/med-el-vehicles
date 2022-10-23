@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MedEl.Vehicles.Logic\MedEl.Vehicles.Logic.csproj" />
     <ProjectReference Include="..\MedEl.Vehicles.Repository\MedEl.Vehicles.Repository.csproj" />
   </ItemGroup>
 

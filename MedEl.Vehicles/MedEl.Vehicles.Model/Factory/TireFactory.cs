@@ -43,5 +43,27 @@ namespace MedEl.Vehicles.Model.Factory
             string id = getId<WinterTire>();
             return new WinterTire(id, configuration.Pressure, configuration.MinimumTemperature, configuration.Thickness);
         }
+
+        public IEnumerable<ITire> CreateSummerTires(IVehicle vehicle)
+            => CreateSummerTires(vehicle, summerTireConfiguration);
+
+        public IEnumerable<ITire> CreateSummerTires(IVehicle vehicle, SummerTireConfiguration configuration)
+        {
+            int tireCount = vehicle.Chassis.Axles.Sum(x => x.TireCount);
+            return Enumerable.Range(0, tireCount)
+                .Select(x => CreateSummerTire(configuration))
+                .ToList();
+        }
+
+        public IEnumerable<ITire> CreateWinterTires(IVehicle vehicle)
+            => CreateWinterTires(vehicle, winterTireConfiguration);
+
+        public IEnumerable<ITire> CreateWinterTires(IVehicle vehicle, WinterTireConfiguration configuration)
+        {
+            int tireCount = vehicle.Chassis.Axles.Sum(x => x.TireCount);
+            return Enumerable.Range(0, tireCount)
+                .Select(x => CreateWinterTire(configuration))
+                .ToList();
+        }
     }
 }
