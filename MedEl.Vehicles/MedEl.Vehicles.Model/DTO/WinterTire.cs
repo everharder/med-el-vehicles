@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.DTO
 {
-    internal class WinterTire : Tire
+    internal class WinterTire : Tire, IWinterTire
     {
         public WinterTire(string id, float pressure, float minimumTemperature, float thickness) : base(id, pressure)
         {

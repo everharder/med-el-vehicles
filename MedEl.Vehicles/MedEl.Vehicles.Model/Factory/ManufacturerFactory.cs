@@ -18,14 +18,19 @@ namespace MedEl.Vehicles.Model.Factory
         {
         }
 
-        public IManufacturer CreateManufacturer(string name, EVehicleType vehicleTypes)
+        public IManufacturer CreateManufacturer(string name, EVehicleType supportedVehicleTypes)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
             }
 
-            return new Manufacturer(name, vehicleTypes);
+            if(supportedVehicleTypes == 0)
+            {
+                throw new ArgumentException($"At least one vehicle type must be supported.");
+            }
+
+            return new Manufacturer(name, supportedVehicleTypes);
         }
     }
 }

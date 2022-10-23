@@ -25,7 +25,7 @@ namespace MedEl.Vehicles.Model.Factory
         {
             if (!manufacturer.SupportedVehicleTypes.HasFlag(EVehicleType.Car))
             {
-                throw new ArgumentException($"Cannot create car for manufacturer {manufacturer.Name}. Not allowed!");
+                throw new NotSupportedException($"Cannot create car for manufacturer {manufacturer.Name}. Not allowed!");
             }
 
             string id = getId<Car>();
@@ -37,7 +37,7 @@ namespace MedEl.Vehicles.Model.Factory
         {
             if (!manufacturer.SupportedVehicleTypes.HasFlag(EVehicleType.Motorcycle))
             {
-                throw new ArgumentException($"Cannot create motorcycle for manufacturer {manufacturer.Name}. Not allowed!");
+                throw new NotSupportedException($"Cannot create motorcycle for manufacturer {manufacturer.Name}. Not allowed!");
             }
 
             string id = getId<Motorcycle>();

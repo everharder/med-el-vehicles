@@ -1,4 +1,5 @@
 ﻿using MedEl.Vehicles.Logic.TireChange;
+using MedEl.Vehicles.Model.DTO;
 using MedEl.Vehicles.Model.DTO.Interfaces;
 using MedEl.Vehicles.Model.Enums;
 using MedEl.Vehicles.Model.Factory;
@@ -41,7 +42,7 @@ namespace MedEl.Vehicles.Logic.Tests.TireChange
             IVehicle vehicle = factory.Create(vehicleType, manufacturer);
 
             ITireFactory tireFactory = services.GetRequiredService<ITireFactory>();
-            List<ITire> tires = Enumerable.Range(0, 10)
+            List<IWinterTire> tires = Enumerable.Range(0, 10)
                 .Select(x => tireFactory.CreateWinterTire())
                 .ToList();
             Assert.Throws<ArgumentException>(() => service.ChangeTires(vehicle, tires));
@@ -58,7 +59,8 @@ namespace MedEl.Vehicles.Logic.Tests.TireChange
             ITireChangeService service = services.GetRequiredService<ITireChangeService>();
 
             IVehicleFactory factory = services.GetRequiredService<IVehicleFactory>();
-            IManufacturer manufacturer = services.GetRequiredService<IManufacturerFactory>().CreateManufacturer("foobar", EVehicleType.Car | EVehicleType.Motorcycle);
+            IManufacturer manufacturer = services.GetRequiredService<IManufacturerFactory>()
+                .CreateManufacturer("foobar", EVehicleType.Car | EVehicleType.Motorcycle);
             IVehicle vehicle = factory.Create(vehicleType, manufacturer);
 
             ITireFactory tireFactory = services.GetRequiredService<ITireFactory>();

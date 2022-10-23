@@ -2,6 +2,7 @@
 using MedEl.Vehicles.Common.Service;
 using MedEl.Vehicles.Model.DTO;
 using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,19 @@ namespace MedEl.Vehicles.Model.Factory
         {
             string id = getId<Axle>();
             return new MotorcycleAxle(id, tireFactory.CreateSummerTire());
+        }
+
+        public IAxle CreateAxle(EVehicleType vehicleType)
+        {
+            switch(vehicleType)
+            {
+                case EVehicleType.Car:
+                    return CreateCarAxle();
+                case EVehicleType.Motorcycle:
+                    return CreateMotorcycleAxle();
+                default:
+                    throw new NotImplementedException(vehicleType.ToString());
+            }
         }
     }
 }

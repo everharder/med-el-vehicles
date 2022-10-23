@@ -1,4 +1,5 @@
 ﻿using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace MedEl.Vehicles.Model.DTO
         public override IEnumerable<ITire> Tires => new ITire[] { LeftTire, RightTire };
 
         public override int TireCount => 2;
+
+        public override EVehicleType VehicleType => EVehicleType.Car;
 
         public override string ToPrettyString()
         {

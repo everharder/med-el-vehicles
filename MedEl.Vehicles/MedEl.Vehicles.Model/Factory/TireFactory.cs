@@ -40,28 +40,41 @@ namespace MedEl.Vehicles.Model.Factory
             }
         }
 
-        public ITire CreateSummerTire()
+        public ISummerTire CreateSummerTire()
             => CreateSummerTire(summerTireConfiguration);
 
-        public ITire CreateSummerTire(SummerTireConfiguration configuration)
+        public ISummerTire CreateSummerTire(SummerTireConfiguration configuration)
         {
             string id = getId<SummerTire>();
             return new SummerTire(id, configuration.Pressure, configuration.MaximumTemperature);
         }
 
-        public ITire CreateWinterTire()
+        public IWinterTire CreateWinterTire()
             => CreateWinterTire(winterTireConfiguration);
 
-        public ITire CreateWinterTire(WinterTireConfiguration configuration)
+        public IWinterTire CreateWinterTire(WinterTireConfiguration configuration)
         {
             string id = getId<WinterTire>();
             return new WinterTire(id, configuration.Pressure, configuration.MinimumTemperature, configuration.Thickness);
         }
 
-        public IEnumerable<ITire> CreateSummerTires(IVehicle vehicle)
+        public IEnumerable<ITire> CreateTires(IVehicle vehicle, ETireType tireType)
+        {
+            switch (tireType)
+            {
+                case ETireType.SummerTire:
+                    return CreateSummerTires(vehicle);
+                case ETireType.WinterTire:
+                    return CreateWinterTires(vehicle);
+                default:
+                    throw new NotImplementedException(tireType.ToString());
+            }
+        }
+
+        public IEnumerable<ISummerTire> CreateSummerTires(IVehicle vehicle)
             => CreateSummerTires(vehicle, summerTireConfiguration);
 
-        public IEnumerable<ITire> CreateSummerTires(IVehicle vehicle, SummerTireConfiguration configuration)
+        public IEnumerable<ISummerTire> CreateSummerTires(IVehicle vehicle, SummerTireConfiguration configuration)
         {
             int tireCount = vehicle.Chassis.Axles.Sum(x => x.TireCount);
             return Enumerable.Range(0, tireCount)
@@ -69,10 +82,10 @@ namespace MedEl.Vehicles.Model.Factory
                 .ToList();
         }
 
-        public IEnumerable<ITire> CreateWinterTires(IVehicle vehicle)
+        public IEnumerable<IWinterTire> CreateWinterTires(IVehicle vehicle)
             => CreateWinterTires(vehicle, winterTireConfiguration);
 
-        public IEnumerable<ITire> CreateWinterTires(IVehicle vehicle, WinterTireConfiguration configuration)
+        public IEnumerable<IWinterTire> CreateWinterTires(IVehicle vehicle, WinterTireConfiguration configuration)
         {
             int tireCount = vehicle.Chassis.Axles.Sum(x => x.TireCount);
             return Enumerable.Range(0, tireCount)

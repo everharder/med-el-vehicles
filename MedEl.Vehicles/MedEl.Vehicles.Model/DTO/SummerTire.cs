@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MedEl.Vehicles.Model.DTO
 {
-    internal class SummerTire : Tire
+    internal class SummerTire : Tire, ISummerTire
     {
         /// <summary>
         /// Creates a new instance

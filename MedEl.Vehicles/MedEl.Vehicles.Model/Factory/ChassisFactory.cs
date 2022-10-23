@@ -2,6 +2,7 @@
 using MedEl.Vehicles.Common.Service;
 using MedEl.Vehicles.Model.DTO;
 using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace MedEl.Vehicles.Model.Factory
 
         public IChassis CreateCarChassis()
         {
-            return createChassis(new List<IAxle>()
+            return createChassis(EVehicleType.Car, new List<IAxle>()
             {
                 axleFactory.CreateCarAxle(),
                 axleFactory.CreateCarAxle(),
@@ -31,16 +32,30 @@ namespace MedEl.Vehicles.Model.Factory
 
         public IChassis CreateMotorcycleChassis()
         {
-            return createChassis(new List<IAxle>()
+            return createChassis(EVehicleType.Motorcycle, new List<IAxle>()
             {
+                axleFactory.CreateMotorcycleAxle(),
                 axleFactory.CreateMotorcycleAxle()
             });
         }
 
-        private IChassis createChassis(IEnumerable<IAxle> axles)
+        public IChassis CreateChassis(EVehicleType vehicleType)
+        {
+            switch (vehicleType)
+            {
+                case EVehicleType.Car:
+                    return CreateCarChassis();
+                case EVehicleType.Motorcycle:
+                    return CreateMotorcycleChassis();
+                default:
+                    throw new NotImplementedException(vehicleType.ToString());
+            }
+        }
+
+        private IChassis createChassis(EVehicleType vehicleType, IEnumerable<IAxle> axles)
         {
             string id = getId<Chassis>();
-            return new Chassis(id, axles);
+            return new Chassis(id, vehicleType, axles);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace MedEl.Vehicles.Model.DTO
 
         public abstract IEnumerable<ITire> Tires { get; }
         public abstract int TireCount { get; }
+        public abstract EVehicleType VehicleType { get; }
 
         public virtual void SetTires(IEnumerable<ITire> tires)
         {
