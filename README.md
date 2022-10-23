@@ -1,4 +1,4 @@
-![example workflow]([https://github.com/github/docs/actions/workflows/main.yml/badge.svg](https://github.com/everharder/med-el-vehicles/actions/workflows/dotnet.yml/badge.svg))
+![example workflow](https://github.com/everharder/med-el-vehicles/actions/workflows/dotnet.yml/badge.svg)
 
 
 # MED-EL Application Assignment 
