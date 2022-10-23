@@ -12,7 +12,7 @@ namespace MedEl.Vehicles.CLI.Input
 {
     internal class CliInput
     {
-        [Option(shortName: 'c', longName: "command", Required = true, HelpText = $"Selects the command (Create, List, Delete, Select, Print, Exit)")]
+        [Option(shortName: 'c', longName: "command", Required = true, HelpText = $"Selects the command (Create, List, Delete, Select, Print, ChangeTires, Exit)")]
         public ECommand Command { get; set; }
 
         [Option(shortName: 't', longName: "type", Required = false, HelpText = "The type of entity to access (Car, Motorcycle, Manufacturer).")]

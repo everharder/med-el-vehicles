@@ -80,6 +80,7 @@ namespace MedEl.Vehicles.Repository.FileSystem
         {
             return Directory.EnumerateFiles(getPath<TEntity>())
                 .Select(x => read<TEntity>(x))
+                .OrderBy(x => x.Id)
                 .ToList();
         }
 

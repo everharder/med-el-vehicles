@@ -48,7 +48,7 @@ namespace MedEl.Vehicles.Repository.InMemory
         /// </summary>
         public List<TCache> GetAll()
         {
-            return _cache.Values.ToList();
+            return _cache.Values.OrderBy(x => x.Id).ToList();
         }
 
         /// <summary>

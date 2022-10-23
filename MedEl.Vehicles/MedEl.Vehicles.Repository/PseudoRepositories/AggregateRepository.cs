@@ -36,24 +36,30 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
 
         /// <inheritdoc/>
         public bool Delete<TEntity>(TEntity entity) where TEntity : IIdentification
-            => executeOnRepositories(r => r.Delete(entity));
+            => ensureInitialized<TEntity>()
+                .executeOnRepositories(r => r.Delete(entity));
 
         /// <inheritdoc/>
         public bool Delete<TEntity>(string id) where TEntity : IIdentification
-            => executeOnRepositories(r => r.Delete<TEntity>(id));
+            => ensureInitialized<TEntity>()
+                .executeOnRepositories(r => r.Delete<TEntity>(id));
 
         /// <inheritdoc/>
         public virtual TEntity? Get<TEntity>(string id) where TEntity : IIdentification
-            => _repositories.Select(x => x.Get<TEntity>(id)).FirstOrDefault(x => x != null);
+            => ensureInitialized<TEntity>()
+                ._repositories
+                .Select(x => x.Get<TEntity>(id)).FirstOrDefault(x => x != null);
 
         /// <inheritdoc/>
         public virtual List<TEntity> GetAll<TEntity>() where TEntity : IIdentification
-            => _repositories.Select(x => x.GetAll<TEntity>()).FirstOrDefault(x => x.Count > 0)
-                ?? new List<TEntity>();
+            => ensureInitialized<TEntity>()
+                ._repositories.Select(x => x.GetAll<TEntity>()).FirstOrDefault(x => x.Count > 0)
+                    ?? new List<TEntity>();
 
         /// <inheritdoc/>
         public void Save<TEntity>(TEntity entity) where TEntity : IIdentification
-            => executeOnRepositories(r => r.Save(entity));
+            => ensureInitialized<TEntity>()
+                .executeOnRepositories(r => r.Save(entity));
 
         /// <inheritdoc/>
         public void Truncate()
@@ -61,7 +67,10 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
 
         /// <inheritdoc/>
         public string GetHighestId<TEntity>() where TEntity : IIdentification
-            => _repositories.First().GetHighestId<TEntity>();
+            => ensureInitialized<TEntity>()
+                ._repositories
+                .First()
+                .GetHighestId<TEntity>();
 
         private void executeOnRepositories(Action<IRepository> action)
         {
@@ -107,6 +116,11 @@ namespace MedEl.Vehicles.Repository.PseudoRepositories
             }
             
             return result;
+        }
+
+        protected virtual AggregateRepository ensureInitialized<TEntity>() where TEntity : IIdentification
+        {
+            return this;
         }
     }
 }
