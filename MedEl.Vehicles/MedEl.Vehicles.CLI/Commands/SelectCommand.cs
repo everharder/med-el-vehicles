@@ -23,7 +23,7 @@ namespace MedEl.Vehicles.CLI.Commands
             StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrWhiteSpace(input.Id))
             {
-                IIdentification? element = getDac(input)
+                IIdentification? element = getDac(input.Type)
                     .Find(input.Id);
 
                 if(element == null)

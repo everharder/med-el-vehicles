@@ -21,14 +21,14 @@ namespace MedEl.Vehicles.CLI.Commands
 
         public abstract string Execute(CliInput input);
 
-        protected Type parseEntityType(CliInput input)
+        protected Type parseEntityType(EEntityTypeName? type)
         {
-            if (!input.Type.HasValue)
+            if (!type.HasValue)
             {
-                throw new Exception($"Parameter {nameof(CliInput.Type)} is required for command {input.Command}");
+                throw new Exception($"Parameter {nameof(CliInput.Type)} is required.");
             }
 
-            switch (input.Type)
+            switch (type)
             {
                 case EEntityTypeName.Car:
                     return typeof(ICar);
@@ -37,13 +37,18 @@ namespace MedEl.Vehicles.CLI.Commands
                 case EEntityTypeName.Manufacturer:
                     return typeof(IManufacturer);
                 default:
-                    throw new NotSupportedException(input.Type.ToString());
+                    throw new NotSupportedException(type.ToString());
             }
         }
 
-        protected IDAC getDac(CliInput input)
+        protected IDAC getDac(EEntityTypeName? type)
         {
-            Type entityType = parseEntityType(input);
+            Type entityType = parseEntityType(type);
+            return getDac(entityType);
+        }
+
+        protected IDAC getDac(Type entityType)
+        {
             IDACFactory dacFactory = services.GetRequiredService<IDACFactory>();
             IDAC dac = dacFactory.CreateDAC(entityType);
             return dac;

@@ -25,13 +25,15 @@ namespace MedEl.Vehicles.CLI.Commands
             if(context.SelectedElement == null)
             {
                 sb.AppendLine("Nothing to delete...");
+                return sb.ToString();
             }
 
-            IDAC dac = getDac(input);
+            IDAC dac = getDac(context.SelectedElement.GetType());
             bool success = dac.Delete(context.SelectedElement!);
 
             if(success)
             {
+                context.SelectedElement = null;
                 sb.AppendLine("Element deleted successfully");
             }
             else

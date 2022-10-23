@@ -30,6 +30,16 @@ namespace MedEl.Vehicles.Repository.DAC
                 throw new ArgumentException($"EntityType {entityType.Name} is not derived from {nameof(IIdentification)}");
             }
 
+            if(!entityType.IsInterface)
+            {
+                Type? interfaceType = entityType.GetInterfaces().LastOrDefault(x => typeof(IIdentification).IsAssignableFrom(x));
+                if(interfaceType == null)
+                {
+                    throw new Exception($"Cannot determine DAC type for entity type {entityType.Name}");
+                }
+                entityType = interfaceType;
+            }
+
             if (!dacTypeCache.TryGetValue(entityType, out Type? dacType))
             {
                 Type generic = typeof(ITypedDAC<>);

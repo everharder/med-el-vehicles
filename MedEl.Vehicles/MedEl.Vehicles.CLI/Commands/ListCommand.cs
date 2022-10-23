@@ -19,7 +19,7 @@ namespace MedEl.Vehicles.CLI.Commands
 
         public override string Execute(CliInput input)
         {
-            IDAC dac = getDac(input);
+            IDAC dac = getDac(input.Type);
             List<IIdentification> elements = dac.FindAll();
             StringBuilder sb = new StringBuilder();
 
