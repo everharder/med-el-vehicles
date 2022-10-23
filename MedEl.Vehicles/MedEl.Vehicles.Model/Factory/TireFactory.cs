@@ -3,6 +3,7 @@ using MedEl.Vehicles.Common.Service;
 using MedEl.Vehicles.Model.Configuration;
 using MedEl.Vehicles.Model.DTO;
 using MedEl.Vehicles.Model.DTO.Interfaces;
+using MedEl.Vehicles.Model.Enums;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,19 @@ namespace MedEl.Vehicles.Model.Factory
         {
             this.summerTireConfiguration = summerTireConfiguration;
             this.winterTireConfiguration = winterTireConfiguration;
+        }
+
+        public ITire CreateTire(ETireType tireType)
+        {
+            switch(tireType)
+            {
+                case ETireType.WinterTire:
+                    return CreateWinterTire();
+                case ETireType.SummerTire:
+                    return CreateSummerTire();
+                default:
+                    throw new NotImplementedException(tireType.ToString());
+            }
         }
 
         public ITire CreateSummerTire()

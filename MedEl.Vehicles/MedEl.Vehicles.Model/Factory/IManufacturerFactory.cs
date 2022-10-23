@@ -5,6 +5,6 @@ namespace MedEl.Vehicles.Model.Factory
 {
     public interface IManufacturerFactory
     {
-        IManufacturer CreateManufacturer(string name, EVehicleType vehicleTypes);
+        IManufacturer CreateManufacturer(string name, EVehicleType supportedVehicleTypes);
     }
 }

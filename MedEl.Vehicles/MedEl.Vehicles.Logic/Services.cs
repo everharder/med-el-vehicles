@@ -1,4 +1,5 @@
-﻿using MedEl.Vehicles.Logic.TireChange;
+﻿using MedEl.Vehicles.Common;
+using MedEl.Vehicles.Logic.TireChange;
 using MedEl.Vehicles.Model;
 using MedEl.Vehicles.Model.Configuration;
 using MedEl.Vehicles.Model.Factory;
@@ -15,7 +16,9 @@ namespace MedEl.Vehicles.Logic
     {
         public static IServiceCollection AddLogic(this IServiceCollection services)
         {
-            return services.AddModel()
+            return services
+                .AddCommon()
+                .AddModel()
                 .AddSingleton<ITireChangeService, TireChangeService>();
         }
     }

@@ -16,7 +16,9 @@ namespace MedEl.Vehicles.Common
     {
         public static IServiceCollection AddCommon(this IServiceCollection services)
         {
-            return services.AddSingleton<IConfigurationDictionary, AppSettingsConfiguration>()
+            return services
+                .AddLogging()
+                .AddSingleton<IConfigurationDictionary, AppSettingsConfiguration>()
                 .AddSingleton<IConfiguration, BaseConfiguration>()
                 .AddSingleton<ILogger>(provider => provider.GetRequiredService<ILogger<object>>())
                 .AddSingleton<IIdentificationProvider, IncrementalIdentifierProvider>();

@@ -44,5 +44,18 @@ namespace MedEl.Vehicles.Model.Factory
             IChassis chassis = chassisFactory.CreateMotorcycleChassis();
             return new Motorcycle(id, manufacturer, chassis);
         }
+
+        public IVehicle Create(EVehicleType vehicleType, IManufacturer manufacturer)
+        {
+            switch(vehicleType)
+            {
+                case EVehicleType.Car:
+                    return CreateCar(manufacturer);
+                case EVehicleType.Motorcycle:
+                    return CreateMotorcycle(manufacturer);
+                default:
+                    throw new NotImplementedException(vehicleType.ToString());
+            }
+        }
     }
 }

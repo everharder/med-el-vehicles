@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MedEl.Vehicles.Repository\MedEl.Vehicles.Repository.csproj" />
+    <ProjectReference Include="..\MedEl.Vehicles.Common\MedEl.Vehicles.Common.csproj" />
+    <ProjectReference Include="..\MedEl.Vehicles.Logic\MedEl.Vehicles.Logic.csproj" />
   </ItemGroup>
 
 </Project>
