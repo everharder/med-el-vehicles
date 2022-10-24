@@ -18,15 +18,18 @@ namespace MedEl.Vehicles.CLI.Commands
     {
         private readonly Context context;
         private readonly ITireChangeService tireChangeService;
+        private readonly IDACFactory dACFactory;
         private readonly ITireFactory tireFactory;
 
         public ChangeTiresCommand(IServiceProvider services, 
             Context context, 
             ITireChangeService tireChangeService, 
+            IDACFactory dACFactory,
             ITireFactory tireFactory) : base(services)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.tireChangeService = tireChangeService ?? throw new ArgumentNullException(nameof(tireChangeService));
+            this.dACFactory = dACFactory ?? throw new ArgumentNullException(nameof(dACFactory));
             this.tireFactory = tireFactory ?? throw new ArgumentNullException(nameof(tireFactory));
         }
 
@@ -66,6 +69,9 @@ namespace MedEl.Vehicles.CLI.Commands
             }
 
             tireChangeService.ChangeTires(vehicle, tires);
+
+            dACFactory.CreateDAC(vehicle.GetType()).Save(vehicle);
+
             sb.AppendLine("Tires changed!");
 
             return sb.ToString();
